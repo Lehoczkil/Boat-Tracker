@@ -1,14 +1,16 @@
 {
-  "name": "dataprovider",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "BoatCoordinateProvider.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ."
   },
-  "author": "Lehoczkil",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "ws": "^8.11.0"
+    "socket.io": "^3.0.4",
+    "ws": "^7.4.1"
   }
 }
