@@ -23,11 +23,12 @@ async function start_sending_coordinates() {
         for (coordinate_row of coordinate_table) {
             io.send(coordinate_row)
             await new Promise(resolve => setTimeout(resolve, frequency));
+
         }
     }
 }
 
-io.on('connection', async (socket) => {
+io.on('connection', async () => {
     console.log('a user connected');
     await start_sending_coordinates()
 });
