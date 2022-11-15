@@ -1,10 +1,12 @@
 const http = require('http').createServer();
+const csv = require("csvtojson");
+
+const port = 8080;
+const frequency = 1000;
 
 const io = require('socket.io')(http, {
     cors: { origin: "*" }
 });
-
-const csv = require("csvtojson");
 
 let coordinates1, coordinates2, coordinates3 = null;
 
@@ -20,7 +22,7 @@ async function start_sending_coordinates() {
     for (coordinate_table of coordinates) {
         for (coordinate_row of coordinate_table) {
             io.send(coordinate_row)
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, frequency));
         }
     }
 }
@@ -30,4 +32,4 @@ io.on('connection', async (socket) => {
     await start_sending_coordinates()
 });
 
-http.listen(8080, () => console.log('listening on http://localhost:8080') );
+http.listen(port, () => console.log(`listening on http://localhost:${port}`) );
