@@ -33,7 +33,7 @@ const Home = ({ socket }) => {
 
   useEffect(() => {
     if (map) {
-      map.getView().setCenter([coordinates.lat, coordinates.lon]);
+      map.getView().setCenter([coordinates.lon, coordinates.lat]);
     }
   }, [coordinates]);
 
