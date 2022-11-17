@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-let currentCoordinates = null;
+let boat1CurrentCoordinates = null;
+let boat2CurrentCoordinates = null;
+let boat3CurrentCoordinates = null;
 // port for http for requests for changing protocol
 const httpPort = 3513;
 // port for socket for sending data
@@ -11,8 +13,14 @@ const io = require("socket.io-client");
 const socket = io("ws://localhost:8080");
 
 // deals with the data coming from the mock application
-socket.on("message", (text) => {
-  currentCoordinates = text;
+socket.on("boat1", (coordinates) => {
+  boat1CurrentCoordinates = coordinates;
+});
+socket.on("boat2", (coordinates) => {
+  boat2CurrentCoordinates = coordinates;
+});
+socket.on("boat3", (coordinates) => {
+  boat3CurrentCoordinates = coordinates;
 });
 
 // server for the actual clients, sends the data to them
@@ -26,14 +34,16 @@ let isSending = false;
 
 async function sendData() {
   while (true) {
-    serverIo.send(currentCoordinates);
-    // waits for an amount of time to prevent sending data constantly 
+    serverIo.emit("boat1", boat1CurrentCoordinates);
+    serverIo.emit("boat2", boat2CurrentCoordinates);
+    serverIo.emit("boat3", boat3CurrentCoordinates);
+    // waits for an amount of time to prevent sending data constantly
     await new Promise((resolve) => setTimeout(resolve, frequency));
   }
 }
 
 serverIo.on("connection", () => {
-  console.log('new connection');
+  console.log("new connection");
   // if there is a connection, we are already sending the data, so we shouldn't start sending again on a new connection
   if (!isSending) {
     sendData();
