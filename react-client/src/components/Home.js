@@ -6,7 +6,9 @@ import View from "ol/View";
 import XYZ from "ol/source/XYZ";
 
 const Home = ({ socket }) => {
-  const [coordinates, setCoordinates] = useState("");
+  const [boat1Coordinates, setBoat1Coordinates] = useState("");
+  const [boat2Coordinates, setBoat2Coordinates] = useState("");
+  const [boat3Coordinates, setBoat3Coordinates] = useState("");
 
   const [map, setMap] = useState();
 
@@ -24,8 +26,8 @@ const Home = ({ socket }) => {
           }),
         ],
         view: new View({
-          center: [coordinates.lat, coordinates.lon],
-          zoom: 20,
+          center: [boat1Coordinates.lat, boat1Coordinates.lon],
+          zoom: 16,
         }),
       })
     );
@@ -33,13 +35,21 @@ const Home = ({ socket }) => {
 
   useEffect(() => {
     if (map) {
-      map.getView().setCenter([coordinates.lon, coordinates.lat]);
+      map.getView().setCenter([boat1Coordinates.lon, boat1Coordinates.lat]);
     }
-  }, [coordinates]);
+  }, [boat1Coordinates, boat2Coordinates, boat3Coordinates]);
 
   useEffect(() => {
-    socket.on("message", (newCoordinates) => {
-      setCoordinates(newCoordinates);
+    socket.on("boat1", (newCoordinates) => {
+      setBoat1Coordinates(newCoordinates);
+    });
+    
+    socket.on("boat2", (newCoordinates) => {
+      setBoat2Coordinates(newCoordinates);
+    });
+    
+    socket.on("boat3", (newCoordinates) => {
+      setBoat3Coordinates(newCoordinates);
     });
   }, []);
 
