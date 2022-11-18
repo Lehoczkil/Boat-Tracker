@@ -140,7 +140,7 @@ const Home = ({ socket }) => {
 
   return (
     <>
-      <div id="map" className="map" />;
+      <div id="map" className="map" />
       <Controls 
         boat1={boat1Coordinates}
         boat2={boat2Coordinates}

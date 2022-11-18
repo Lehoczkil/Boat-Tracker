@@ -13,6 +13,53 @@ code {
 }
 
 .map {
-  width: auto;
+  flex-basis: 70%;
   height: 100vh;
+}
+
+.app {
+  display: flex;
+  width: 100%;
+
+}
+
+.positions {
+  width: 35%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.record-panel {
+  width: 50%;
+  margin-inline: auto;
+  margin-block: 5vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.record-panel button {
+  width: 6vw;
+  font-size: clamp(12px, 1vw, 25px);
+  background-color: turquoise;
+  border-radius: clamp(5px, 0.4vw, 10px);
+  box-sizing: border-box;
+  border-style: none;
+  padding-block:0.5vh;
+  transition: 0.3s;
+}
+
+.record-panel button:hover {
+  border-radius: 3px;
+  background-color: blue;
+  color: white;
+}
+
+.record-panel button:active {
+  background-color: darkblue;
+}
+
+.controls {
+  flex-basis: 30%;
 }
