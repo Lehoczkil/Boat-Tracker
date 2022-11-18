@@ -100,7 +100,7 @@ const Home = ({ socket }) => {
   }, [boat3]);
 
   useEffect( () => {
-    if ((boat1, boat2, boat3)) {
+    if ((boat1)) {
       boat1.getGeometry()
       .setCoordinates(
         [
@@ -108,7 +108,11 @@ const Home = ({ socket }) => {
           boat1Coordinates.lat
         ]
       );
+    }
+  }, [boat1Coordinates])
 
+  useEffect( () => {
+    if ((boat2)) {
       boat2.getGeometry()
       .setCoordinates(
         [
@@ -116,20 +120,20 @@ const Home = ({ socket }) => {
           boat2Coordinates.lat
         ]
       );
+    }
+  }, [boat2Coordinates])
 
+  useEffect( () => {
+    if ((boat3)) {
       boat3.getGeometry()
       .setCoordinates(
         [
           boat3Coordinates.lon,
           boat3Coordinates.lat
         ]
-      )
+      );
     }
-    if(map) {
-      console.log(boat1.getGeometry().getCoordinates(), 'boat')
-      console.log(map.getLayers())
-    }
-  }, [boat1Coordinates, boat2Coordinates, boat3Coordinates])
+  }, [boat3Coordinates])
 
   useEffect(() => {
     socket.on("boat1", (newCoordinates) => {
