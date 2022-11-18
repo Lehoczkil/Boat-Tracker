@@ -10,6 +10,7 @@ import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { Icon, Style } from "ol/style";
 import logo from "./arrow.png";
+import Controls from "./Controls";
 
 const Home = ({ socket }) => {
   const [boat1Coordinates, setBoat1Coordinates] = useState("");
@@ -99,41 +100,29 @@ const Home = ({ socket }) => {
     }
   }, [boat3]);
 
-  useEffect( () => {
-    if ((boat1)) {
-      boat1.getGeometry()
-      .setCoordinates(
-        [
-          boat1Coordinates.lon,
-          boat1Coordinates.lat
-        ]
-      );
+  useEffect(() => {
+    if (boat1) {
+      boat1
+        .getGeometry()
+        .setCoordinates([boat1Coordinates.lon, boat1Coordinates.lat]);
     }
-  }, [boat1Coordinates])
+  }, [boat1Coordinates]);
 
-  useEffect( () => {
-    if ((boat2)) {
-      boat2.getGeometry()
-      .setCoordinates(
-        [
-          boat2Coordinates.lon,
-          boat2Coordinates.lat
-        ]
-      );
+  useEffect(() => {
+    if (boat2) {
+      boat2
+        .getGeometry()
+        .setCoordinates([boat2Coordinates.lon, boat2Coordinates.lat]);
     }
-  }, [boat2Coordinates])
+  }, [boat2Coordinates]);
 
-  useEffect( () => {
-    if ((boat3)) {
-      boat3.getGeometry()
-      .setCoordinates(
-        [
-          boat3Coordinates.lon,
-          boat3Coordinates.lat
-        ]
-      );
+  useEffect(() => {
+    if (boat3) {
+      boat3
+        .getGeometry()
+        .setCoordinates([boat3Coordinates.lon, boat3Coordinates.lat]);
     }
-  }, [boat3Coordinates])
+  }, [boat3Coordinates]);
 
   useEffect(() => {
     socket.on("boat1", (newCoordinates) => {
@@ -149,7 +138,16 @@ const Home = ({ socket }) => {
     });
   }, []);
 
-  return <div id="map" className="map" />;
+  return (
+    <>
+      <div id="map" className="map" />;
+      <Controls 
+        boat1={boat1Coordinates}
+        boat2={boat2Coordinates}
+        boat3={boat3Coordinates}
+      />
+    </>
+  );
 };
 
 export default Home;
