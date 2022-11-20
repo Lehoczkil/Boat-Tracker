@@ -1,7 +1,7 @@
 //use .env for storing environment variables
-require('dotenv').config();
+require("dotenv").config();
 //use quries to communicate with database
-const db = require('./queries')
+const db = require("./queries");
 
 const express = require("express");
 const app = express();
@@ -9,6 +9,9 @@ const app = express();
 let boat1CurrentCoordinates = null;
 let boat2CurrentCoordinates = null;
 let boat3CurrentCoordinates = null;
+
+// check if a client is currently recording
+let isRecording = false;
 
 // port for http for requests for changing protocol
 const httpPort = 3513;
@@ -49,13 +52,26 @@ async function sendData() {
   }
 }
 
-serverIo.on("connection", () => {
+serverIo.on("connection", (socket) => {
   console.log("new connection");
   // if there is a connection, we are already sending the data, so we shouldn't start sending again on a new connection
   if (!isSending) {
     sendData();
   }
   isSending = true;
+
+  // Handles messages coming from clients
+  socket.on("message", (message) => {
+    if (message === "start") {
+      console.log("A client is started to record");
+      isRecording = true;
+    }
+    else if (message === "stop") {
+      console.log("A client is stopped the recording");
+      isRecording =false;
+    }
+  });
+
 });
 
 httpServer.listen(httpPort, () =>
