@@ -10,6 +10,16 @@ let boat1CurrentCoordinates = null;
 let boat2CurrentCoordinates = null;
 let boat3CurrentCoordinates = null;
 
+let boat1CurrentRecording = [];
+let boat2CurrentRecording = [];
+let boat3CurrentRecording = [];
+
+let currentRecording = [
+  boat1CurrentRecording,
+  boat2CurrentRecording,
+  boat3CurrentRecording,
+];
+
 // check if a client is currently recording
 let isRecording = false;
 
@@ -43,12 +53,57 @@ const frequency = 1000;
 let isSending = false;
 
 async function sendData() {
+  handleRecordings();
   while (true) {
     serverIo.emit("boat1", boat1CurrentCoordinates);
     serverIo.emit("boat2", boat2CurrentCoordinates);
     serverIo.emit("boat3", boat3CurrentCoordinates);
     // waits for an amount of time to prevent sending data constantly
     await new Promise((resolve) => setTimeout(resolve, frequency));
+  }
+}
+
+// Handle storing current recording before sending to database
+async function handleRecordings() {
+  while (true) {
+    if (isRecording) {
+      if (
+        boat1CurrentRecording.length === 0 ||
+        (boat1CurrentRecording.length > 0 &&
+          [boat1CurrentCoordinates.lon, boat1CurrentCoordinates.lat] !==
+            boat1CurrentRecording[-1])
+      ) {
+        boat1CurrentRecording.push([
+          boat1CurrentCoordinates.lon,
+          boat1CurrentCoordinates.lat,
+        ]);
+      }
+
+      if (
+        boat2CurrentRecording.length === 0 ||
+        (boat2CurrentRecording.length > 0 &&
+          [boat2CurrentCoordinates.lon, boat2CurrentCoordinates.lat] !==
+            boat2CurrentRecording[-1])
+      ) {
+        boat2CurrentRecording.push([
+          boat2CurrentCoordinates.lon,
+          boat2CurrentCoordinates.lat,
+        ]);
+      }
+
+      if (
+        boat3CurrentRecording.length === 0 ||
+        (boat3CurrentRecording.length > 0 &&
+          [boat3CurrentCoordinates.lon, boat3CurrentCoordinates.lat] !==
+            boat3CurrentRecording[-1])
+      ) {
+        boat3CurrentRecording.push([
+          boat3CurrentCoordinates.lon,
+          boat3CurrentCoordinates.lat,
+        ]);
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, frequency - 10));
   }
 }
 
@@ -65,13 +120,11 @@ serverIo.on("connection", (socket) => {
     if (message === "start") {
       console.log("A client is started to record");
       isRecording = true;
-    }
-    else if (message === "stop") {
+    } else if (message === "stop") {
       console.log("A client is stopped the recording");
-      isRecording =false;
+      isRecording = false;
     }
   });
-
 });
 
 httpServer.listen(httpPort, () =>
