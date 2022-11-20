@@ -13,6 +13,9 @@ import logo from "./arrow.png";
 import Controls from "./Controls";
 
 const Home = ({ socket }) => {
+
+  const API_KEY = process.env.REACT_APP_API_KEY;
+
   const [boat1Coordinates, setBoat1Coordinates] = useState("");
   const [boat2Coordinates, setBoat2Coordinates] = useState("");
   const [boat3Coordinates, setBoat3Coordinates] = useState("");
@@ -82,7 +85,7 @@ const Home = ({ socket }) => {
           layers: [
             new TileLayer({
               source: new XYZ({
-                url: `https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=${process.env.API_KEY}`,
+                url: `https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=${API_KEY}`,
               }),
             }),
             new VectorLayer({
