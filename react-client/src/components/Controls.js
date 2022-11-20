@@ -1,9 +1,19 @@
 const Controls = ({ boat1, boat2, boat3 }) => {
+
+  function handleStart() {
+    document.getElementById("start").disabled = true;
+    document.getElementById("stop").disabled = false;
+  } 
+  function handleStop() {
+    document.getElementById("start").disabled = false;
+    document.getElementById("stop").disabled = true;
+  }
+
   return (
     <div className="controls">
       <div className="record-panel">
-        <button>Start</button>
-        <button>Stop</button>
+        <button id="start" onClick={() => handleStart()}>Start</button>
+        <button id = "stop" onClick={() => handleStop()}>Stop</button>
       </div>
       <div className="positions">
         <div className="boat-container">

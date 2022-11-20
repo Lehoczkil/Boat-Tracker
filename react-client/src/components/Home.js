@@ -82,7 +82,7 @@ const Home = ({ socket }) => {
           layers: [
             new TileLayer({
               source: new XYZ({
-                url: "https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=14c7611bde4c4982ac1c45ec8b5d80ba",
+                url: `https://{a-c}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=${process.env.API_KEY}`,
               }),
             }),
             new VectorLayer({
