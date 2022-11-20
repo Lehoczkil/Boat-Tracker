@@ -10,22 +10,22 @@ const pool = new Pool({
   port: 5432,
 });
 
-const getRecordings = (req, res) => {
-  pool.query(
-    "SELECT * FROM recordings ORDER BY name",
-    (error,
-    (results) => {
-      if (error) {
-        throw error;
+function getRecordings() {
+  const query = "SELECT * FROM recordings ORDER BY name";
+  return new Promise((resolve, reject) => {
+    pool.query(query, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res.rows);
       }
-      res.status(200).json(results.rows);
-    })
-  );
-};
+    });
+  });
+}
 
 function addRecording(recording) {
   const values = [recording];
-  const query = 'INSERT INTO recordings (recording) VALUES ($1) RETURNING *';
+  const query = "INSERT INTO recordings (recording) VALUES ($1) RETURNING *";
   pool.query(query, values, (err, res) => {
     if (err) {
       console.log(err.stack);
