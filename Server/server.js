@@ -1,9 +1,15 @@
+//use .env for storing environment variables
 require("dotenv").config();
+//use quries to communicate with database
+const db = require('./queries')
+
 const express = require("express");
 const app = express();
+
 let boat1CurrentCoordinates = null;
 let boat2CurrentCoordinates = null;
 let boat3CurrentCoordinates = null;
+
 // port for http for requests for changing protocol
 const httpPort = 3513;
 // port for socket for sending data

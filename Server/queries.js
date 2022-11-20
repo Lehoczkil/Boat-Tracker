@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+// connects to db
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: process.env.USER,
@@ -34,3 +35,8 @@ const addRecording = (req, res) => {
     }
   );
 };
+
+module.exports = {
+    getRecordings,
+    addRecording
+}
