@@ -28,6 +28,8 @@ const Home = ({ socket }) => {
 
   const startingCoordinates = [20.73976894, 48.21548097];
 
+  const [recordings, setRecordings] = useState([]);
+
   useGeographic();
 
   useEffect(() => {
@@ -128,6 +130,10 @@ const Home = ({ socket }) => {
   }, [boat3Coordinates]);
 
   useEffect(() => {
+    socket.on('recordings', (previousRecordings) => {
+      setRecordings(previousRecordings);
+    });
+
     socket.on("boat1", (newCoordinates) => {
       setBoat1Coordinates(newCoordinates);
     });
@@ -139,6 +145,7 @@ const Home = ({ socket }) => {
     socket.on("boat3", (newCoordinates) => {
       setBoat3Coordinates(newCoordinates);
     });
+
   }, []);
 
   return (
@@ -148,6 +155,7 @@ const Home = ({ socket }) => {
         boat1={boat1Coordinates}
         boat2={boat2Coordinates}
         boat3={boat3Coordinates}
+        recordings={recordings}
         socket={socket}
       />
     </>
