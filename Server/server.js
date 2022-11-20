@@ -1,5 +1,5 @@
 //use .env for storing environment variables
-require("dotenv").config();
+require('dotenv').config();
 //use quries to communicate with database
 const db = require('./queries')
 
