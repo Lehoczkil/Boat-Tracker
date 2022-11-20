@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 
-const Controls = ({ boat1, boat2, boat3, socket }) => {
+const Controls = ({ boat1, boat2, boat3, recordings, socket }) => {
 
   function handleStart() {
     document.getElementById("start").disabled = true;
@@ -18,6 +18,17 @@ const Controls = ({ boat1, boat2, boat3, socket }) => {
       <div className="record-panel">
         <button id="start" onClick={() => handleStart()}>Start</button>
         <button id = "stop" onClick={() => handleStop()}>Stop</button>
+      </div>
+      <div className="recordings">
+        <select>
+        {
+          recordings &&
+            recordings.map( (record) => (
+                <option key={record.id}>{record.name}</option>
+            ))
+          }
+      
+        </select>
       </div>
       <div className="positions">
         <div className="boat-container">
