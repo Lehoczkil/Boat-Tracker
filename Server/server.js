@@ -118,6 +118,11 @@ function pushRecordToDB() {
   
 }
 
+async function sendRecordings() {
+  const recordings = await db.getRecordings();
+  serverIo.emit('recordings', recordings);
+}
+
 serverIo.on("connection", (socket) => {
   console.log("new connection");
   // if there is a connection, we are already sending the data, so we shouldn't start sending again on a new connection
@@ -125,6 +130,9 @@ serverIo.on("connection", (socket) => {
     sendData();
   }
   isSending = true;
+
+  // Sends previous recordings to clients
+  sendRecordings();
 
   // Handles messages coming from clients
   socket.on("message", (message) => {
