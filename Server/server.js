@@ -101,6 +101,7 @@ async function handleRecordings() {
   }
 }
 
+// Puts the current recording into the database
 function pushRecordToDB() {
   let currentRecording = [
     boat1CurrentRecording,
@@ -115,9 +116,9 @@ function pushRecordToDB() {
   boat3CurrentRecording = [];
 
   db.addRecording(currentRecording);
-  
 }
 
+// Sends the previous recordings to the clients
 async function sendRecordings() {
   const recordings = await db.getRecordings();
   serverIo.emit('recordings', recordings);
@@ -131,7 +132,6 @@ serverIo.on("connection", (socket) => {
   }
   isSending = true;
 
-  // Sends previous recordings to clients
   sendRecordings();
 
   // Handles messages coming from clients
