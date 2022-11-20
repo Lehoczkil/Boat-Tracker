@@ -1,7 +1,8 @@
 import io from "socket.io-client";
 
 const Controls = ({ boat1, boat2, boat3, recordings, socket }) => {
-
+  
+  // Handles the click events coming from the start/stop buttons
   function handleStart() {
     document.getElementById("start").disabled = true;
     document.getElementById("stop").disabled = false;
@@ -21,6 +22,7 @@ const Controls = ({ boat1, boat2, boat3, recordings, socket }) => {
       </div>
       <div className="recordings">
         <select>
+          // Maps the recordings from the express server if there are any
         {
           recordings &&
             recordings.map( (record) => (
