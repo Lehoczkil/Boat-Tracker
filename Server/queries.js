@@ -21,3 +21,16 @@ const getRecordings = (req, res) => {
     })
   );
 };
+
+const addRecording = (req, res) => {
+  pool.query(
+    "INSERT INTO recordings (recording) VALUES ($1, $2)",
+    recording,
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(201).send(`Recording added with ID: ${results.rows[0].id}`);
+    }
+  );
+};
