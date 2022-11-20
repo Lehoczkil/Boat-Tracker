@@ -1,12 +1,16 @@
-const Controls = ({ boat1, boat2, boat3 }) => {
+import io from "socket.io-client";
+
+const Controls = ({ boat1, boat2, boat3, socket }) => {
 
   function handleStart() {
     document.getElementById("start").disabled = true;
     document.getElementById("stop").disabled = false;
+    socket.emit("message", "start");
   } 
   function handleStop() {
     document.getElementById("start").disabled = false;
     document.getElementById("stop").disabled = true;
+    socket.emit("message", "stop");
   }
 
   return (

@@ -148,6 +148,7 @@ const Home = ({ socket }) => {
         boat1={boat1Coordinates}
         boat2={boat2Coordinates}
         boat3={boat3Coordinates}
+        socket={socket}
       />
     </>
   );
