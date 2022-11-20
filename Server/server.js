@@ -14,12 +14,6 @@ let boat1CurrentRecording = [];
 let boat2CurrentRecording = [];
 let boat3CurrentRecording = [];
 
-let currentRecording = [
-  boat1CurrentRecording,
-  boat2CurrentRecording,
-  boat3CurrentRecording,
-];
-
 // check if a client is currently recording
 let isRecording = false;
 
@@ -107,6 +101,23 @@ async function handleRecordings() {
   }
 }
 
+function pushRecordToDB() {
+  let currentRecording = [
+    boat1CurrentRecording,
+    boat2CurrentRecording,
+    boat3CurrentRecording,
+  ];
+
+  console.log('push');
+
+  boat1CurrentRecording = [];
+  boat2CurrentRecording = [];
+  boat3CurrentRecording = [];
+
+  db.addRecording(currentRecording);
+  
+}
+
 serverIo.on("connection", (socket) => {
   console.log("new connection");
   // if there is a connection, we are already sending the data, so we shouldn't start sending again on a new connection
@@ -123,6 +134,7 @@ serverIo.on("connection", (socket) => {
     } else if (message === "stop") {
       console.log("A client is stopped the recording");
       isRecording = false;
+      pushRecordToDB();
     }
   });
 });
