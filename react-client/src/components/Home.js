@@ -14,24 +14,30 @@ import Controls from "./Controls";
 
 const Home = ({ socket }) => {
 
+  // Api key for getting the map for openlayers
   const API_KEY = process.env.REACT_APP_API_KEY;
 
+  // Coordinates of the boats coming from the express server
   const [boat1Coordinates, setBoat1Coordinates] = useState("");
   const [boat2Coordinates, setBoat2Coordinates] = useState("");
   const [boat3Coordinates, setBoat3Coordinates] = useState("");
 
   const [map, setMap] = useState();
 
+  // The actual features visualized in the map by openlayers
   const [boat1, setBoat1] = useState();
   const [boat2, setBoat2] = useState();
   const [boat3, setBoat3] = useState();
 
+  // Starting coordinates for the boats before the actual data comes in
   const startingCoordinates = [20.73976894, 48.21548097];
 
   const [recordings, setRecordings] = useState([]);
 
+  // Enables the usage of lat/lon format
   useGeographic();
 
+  // Set up the boats for visualization with initial position
   useEffect(() => {
     setBoat1(
       new Feature({
@@ -79,6 +85,7 @@ const Home = ({ socket }) => {
     );
   }, []);
 
+  // Set up the map for rendering
   useEffect(() => {
     if ((boat1, boat2, boat3)) {
       setMap(
@@ -105,6 +112,7 @@ const Home = ({ socket }) => {
     }
   }, [boat3]);
 
+  // Change the boats coordinates according to the data from the express server
   useEffect(() => {
     if (boat1) {
       boat1
@@ -129,6 +137,7 @@ const Home = ({ socket }) => {
     }
   }, [boat3Coordinates]);
 
+  // Handles messages coming from the express server
   useEffect(() => {
     socket.on('recordings', (previousRecordings) => {
       setRecordings(previousRecordings);
