@@ -1,5 +1,5 @@
-# Norbit-homework-sonar
-This Project is homework for Norbit's job interview.
+# Boat-Tracker
+This Project was a homework provided by Norbit. I had a week to create this application. You can read the full task description below.
 ## Installation
 
 Use npm install to download the needed dependencies.
