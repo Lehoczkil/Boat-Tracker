@@ -60,3 +60,4 @@ Now you are ready
 - Express JS
 - Node JS
 - OpenLayers
+- PSQL
